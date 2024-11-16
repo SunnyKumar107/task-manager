@@ -1,50 +1,60 @@
-# React + TypeScript + Vite
+# Task Manager App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight and efficient Task Manager App built with **React** and **TypeScript**, designed to simplify task management. The app allows users to create, delete, and manage tasks with additional features like persistence and sorting for enhanced usability.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You can view the live version of the application at:
 
-## Expanding the ESLint configuration
+[Live URL](https://task-manager-107.netlify.app/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
 
-- Configure the top-level `parserOptions` property like this:
+1. **Task Input**: Add tasks with a descriptive title.
+2. **Task Deletion**: Remove tasks from the list.
+3. **Task Persistence**: Save tasks in local storage to retain them across sessions.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Tech Stack
+
+- **Framework**: React
+- **Language**: TypeScript
+
+## Screenshots
+
+![User Management Interface](./public/taskmanagement-ss.png)
+
+## Getting Started
+
+Follow the instructions below to set up the project locally.
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (v14.x or higher)
+- [Yarn](https://yarnpkg.com/) or [npm](https://www.npmjs.com/)
+
+### Installation
+
+1. **Clone the repository:**
+
+```bash
+ git clone https://github.com/SunnyKumar107/task-manager
+ cd task-manager
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. **Install dependencies.**
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+```bash
+ npm install
+ or
+ yarn install
+```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+3. **Run the project.**
+
+```bash
+ npm run dev
+ or
+ yarn run dev
 ```
