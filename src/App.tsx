@@ -20,12 +20,12 @@ function App() {
     localStorage.removeItem('tasks')
 
     const newTasks: TaskType[] = [
-      ...(tasks || []),
       {
-        id: Math.floor(Math.random() * 1000),
+        id: Date.now(),
         title: newTask,
         isCompleted: false
-      }
+      },
+      ...(tasks || [])
     ]
     localStorage.setItem('tasks', JSON.stringify(newTasks))
     setTasks(newTasks)
@@ -68,7 +68,13 @@ function App() {
 
   useEffect(() => {
     const tasksInStringForm = localStorage.getItem('tasks')
-    tasksInStringForm && setTasks(JSON.parse(tasksInStringForm))
+
+    if (tasksInStringForm) {
+      const sortedTasks = JSON.parse(tasksInStringForm).sort(
+        (a: TaskType, b: TaskType) => b.id - a.id
+      )
+      setTasks(sortedTasks)
+    }
   }, [])
 
   useEffect(() => {
@@ -108,25 +114,34 @@ function App() {
             </button>
           </span>
         </div>
-        <div className='w-full mt-8'>
-          <div className='flex flex-wrap items-center gap-2 mb-4 ml-2'>
-            {buttons.map((btn, i) => (
-              <button
-                key={i}
-                onClick={() => setSelect(btn.type)}
-                className={`text-sm font-medium border-[1px] border-cyan-500 rounded-full px-4 py-1 ${
-                  btn.type === select ? 'bg-cyan-500' : ''
-                }`}
-              >
-                {btn.name}
-              </button>
-            ))}
+        {tasks.length > 0 ? (
+          <div className='w-full mt-8'>
+            <div className='flex flex-wrap items-center gap-2 mb-4 ml-2'>
+              {buttons.map((btn, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSelect(btn.type)}
+                  className={`text-sm font-medium border-[1px] border-cyan-500 rounded-full px-4 py-1 ${
+                    btn.type === select ? 'bg-cyan-500' : ''
+                  }`}
+                >
+                  {btn.name}
+                </button>
+              ))}
+            </div>
+            <div className='flex flex-col space-y-2'>
+              {tasks &&
+                filteredTasks.map((task, i) => <Task key={i} task={task} />)}
+            </div>
           </div>
-          <div className='flex flex-col space-y-2'>
-            {tasks &&
-              filteredTasks.map((task, i) => <Task key={i} task={task} />)}
+        ) : (
+          <div className='flex flex-col items-center justify-center mt-8'>
+            <p className='text-lg font-medium'>
+              You're all caught up! 🎉 No tasks for now. Take a moment to relax
+              or plan something new to stay productive!
+            </p>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )
