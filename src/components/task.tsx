@@ -68,13 +68,13 @@ function Task({ task }: { task: TaskType }) {
       <div className='flex items-center justify-end space-x-2'>
         <button
           onClick={handleUpdateComplete}
-          className={`font-bold rounded-sm p-1 ${
-            task.isCompleted
-              ? 'hover:bg-green-500/90 bg-green-500'
-              : 'bg-orange-500 hover:bg-orange-500/90'
+          className={`font-bold file:placeholder:rounded-sm p-1 ${
+            !task.isCompleted
+              ? 'hover:text-green-500/90 text-green-500'
+              : 'text-orange-500 hover:text-orange-500/90'
           }`}
         >
-          {task.isCompleted ? <Check size={20} /> : <X size={20} />}
+          {task.isCompleted ? <X size={22} /> : <Check size={22} />}
         </button>
         <button
           onClick={handleDelete}
