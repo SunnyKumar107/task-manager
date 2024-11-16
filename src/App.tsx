@@ -17,20 +17,19 @@ function App() {
   const [newTask, setNewTask] = useState('')
 
   const handleCreateNewTask = () => {
-    if (newTask) {
-      console.log(newTask)
-      const newTasks: TaskType[] = [
-        ...(tasks || []),
-        {
-          id: Math.floor(Math.random() * 1000),
-          title: newTask,
-          isCompleted: false
-        }
-      ]
-      localStorage.setItem('tasks', JSON.stringify(newTasks))
-      setTasks(newTasks)
-      setNewTask('')
-    }
+    localStorage.removeItem('tasks')
+
+    const newTasks: TaskType[] = [
+      ...(tasks || []),
+      {
+        id: Math.floor(Math.random() * 1000),
+        title: newTask,
+        isCompleted: false
+      }
+    ]
+    localStorage.setItem('tasks', JSON.stringify(newTasks))
+    setTasks(newTasks)
+    setNewTask('')
   }
 
   const handleFilterTasks = ({
@@ -74,7 +73,6 @@ function App() {
 
   useEffect(() => {
     handleFilterTasks({ type: select ? select : 'all' })
-    // localStorage.removeItem('tasks')
   }, [select, tasks])
 
   return (
@@ -90,7 +88,7 @@ function App() {
               type='text'
               placeholder='Search'
               onChange={(e) => handleFilterTasks({ title: e.target.value })}
-              className='w-full h-10 rounded-r-full outline-none'
+              className='w-full h-10 rounded-r-full outline-none bg-black/50'
             />
           </span>
           <span className='w-full max-w-md flex items-center'>
@@ -99,10 +97,11 @@ function App() {
               placeholder='Add new ...'
               value={newTask}
               onChange={(e) => setNewTask(e.target.value)}
-              className='w-full h-10 px-4 rounded-l-full outline-none'
+              className='w-full h-10 px-4 rounded-l-full outline-none bg-black/50'
             />
             <button
               onClick={handleCreateNewTask}
+              disabled={!newTask}
               className='bg-green-600 h-10 px-3 rounded-r-full hover:bg-green-600/90'
             >
               <Plus />

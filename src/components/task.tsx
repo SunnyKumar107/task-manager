@@ -4,7 +4,7 @@ import { TasksContext } from '../context/task-provider'
 import { useContext } from 'react'
 
 function Task({ task }: { task: TaskType }) {
-  const { setTasks } = useContext(TasksContext)
+  const { tasks, setTasks } = useContext(TasksContext)
 
   const handleDelete = () => {
     const allTasks = localStorage.getItem('tasks')
@@ -19,20 +19,19 @@ function Task({ task }: { task: TaskType }) {
   }
 
   const handleUpdateComplete = () => {
+    localStorage.removeItem('tasks')
+
     const taskForUpdate: TaskType = { ...task, isCompleted: !task.isCompleted }
 
-    const tasksInStringForm = localStorage.getItem('tasks')
-    if (tasksInStringForm) {
-      const tasks = JSON.parse(tasksInStringForm)
+    const updatedTasks = tasks.map((t: TaskType) => {
+      if (t.id === task.id) {
+        return taskForUpdate
+      }
+      return t
+    })
 
-      const updatedTasks = tasks.map((t: TaskType) => {
-        t.id === task.id ? taskForUpdate : t
-      })
-
-      // localStorage.setItem('tasks', JSON.stringify(taskForUpdates))
-      console.log('handleCompleteUpdate', updatedTasks)
-      setTasks(updatedTasks)
-    }
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks))
+    setTasks(updatedTasks)
   }
 
   return (
