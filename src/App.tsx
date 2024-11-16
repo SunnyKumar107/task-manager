@@ -3,6 +3,7 @@ import Task from './components/task'
 import { useContext, useEffect, useState } from 'react'
 import { TasksContext } from './context/task-provider'
 import { Task as TaskType } from './lib/definition'
+import toast, { Toaster } from 'react-hot-toast'
 
 function App() {
   const buttons = [
@@ -28,6 +29,14 @@ function App() {
       ...(tasks || [])
     ]
     localStorage.setItem('tasks', JSON.stringify(newTasks))
+    toast('Task created successfully!', {
+      position: 'bottom-center',
+      icon: '🎉',
+      style: {
+        background: '#06b6d4',
+        color: '#fff'
+      }
+    })
     setTasks(newTasks)
     setNewTask('')
   }
@@ -143,6 +152,7 @@ function App() {
           </div>
         )}
       </div>
+      <Toaster />
     </div>
   )
 }

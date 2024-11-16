@@ -2,6 +2,7 @@ import { Check, CheckCheck, Trash2, X } from 'lucide-react'
 import { Task as TaskType } from '../lib/definition'
 import { TasksContext } from '../context/task-provider'
 import { useContext } from 'react'
+import toast from 'react-hot-toast'
 
 function Task({ task }: { task: TaskType }) {
   const { tasks, setTasks } = useContext(TasksContext)
@@ -14,6 +15,14 @@ function Task({ task }: { task: TaskType }) {
       )
 
       localStorage.setItem('tasks', JSON.stringify(filteredTasks))
+      toast('Task deleted successfully!', {
+        position: 'bottom-center',
+        icon: '🎉',
+        style: {
+          background: '#06b6d4',
+          color: '#fff'
+        }
+      })
       setTasks(filteredTasks)
     }
   }
@@ -31,6 +40,14 @@ function Task({ task }: { task: TaskType }) {
     })
 
     localStorage.setItem('tasks', JSON.stringify(updatedTasks))
+    toast('Task updated successfully!', {
+      position: 'bottom-center',
+      icon: '🎉',
+      style: {
+        background: '#06b6d4',
+        color: '#fff'
+      }
+    })
     setTasks(updatedTasks)
   }
 
